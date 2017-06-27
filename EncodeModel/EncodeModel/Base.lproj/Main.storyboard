@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="EncodeModel" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,64 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input Encode Content" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T2-qm-ax9">
+                                <rect key="frame" x="75" y="64" width="225" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="225" id="AaD-hJ-WNL"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UtH-uV-y1n">
+                                <rect key="frame" x="161" y="118" width="52" height="30"/>
+                                <state key="normal" title="Encode">
+                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="encode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xSU-VA-IEy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UqG-2H-Ae8">
+                                <rect key="frame" x="160" y="352" width="54" height="30"/>
+                                <state key="normal" title="Decode">
+                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="decode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jXM-d0-8gm"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Decode Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-cm-cxP">
+                                <rect key="frame" x="125" y="323" width="125.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="rZ4-Sa-yOe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="UtH-uV-y1n" firstAttribute="top" secondItem="8T2-qm-ax9" secondAttribute="bottom" constant="24" id="EFF-6n-l4r"/>
+                            <constraint firstItem="UtH-uV-y1n" firstAttribute="centerX" secondItem="8T2-qm-ax9" secondAttribute="centerX" id="bJQ-Hl-EPS"/>
+                            <constraint firstItem="8T2-qm-ax9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dgc-Cq-qFf"/>
+                            <constraint firstItem="mmQ-cm-cxP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dgo-fC-C6m"/>
+                            <constraint firstItem="UqG-2H-Ae8" firstAttribute="top" secondItem="mmQ-cm-cxP" secondAttribute="bottom" constant="8" id="gYd-G9-vB0"/>
+                            <constraint firstItem="mmQ-cm-cxP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iMZ-Ue-a0q"/>
+                            <constraint firstItem="UqG-2H-Ae8" firstAttribute="centerX" secondItem="mmQ-cm-cxP" secondAttribute="centerX" id="ste-09-QB2"/>
+                            <constraint firstItem="8T2-qm-ax9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="xgg-bD-ACE"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="content" destination="8T2-qm-ax9" id="tlo-0C-eRp"/>
+                        <outlet property="output" destination="mmQ-cm-cxP" id="fZY-EH-tgk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-143" y="278"/>
         </scene>
     </scenes>
 </document>

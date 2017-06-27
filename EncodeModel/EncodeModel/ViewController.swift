@@ -9,17 +9,31 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var content: UITextField!
+    @IBOutlet weak var output: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func encode(_ sender: Any) {
+        let demo = Demo.init()
+        demo.content = content.text!
+        demo.age = 22
+        demo.name = "BBH"
+        demo.gender = true
+        demo.archive(fileName: "helloFileName")
     }
 
-
+    
+    @IBAction func decode(_ sender: Any) {
+        let demo = Demo.unarchive(fileName: "helloFileName") as? Demo
+        output.text = demo?.content
+        print("name:\(demo?.name ?? ""), age:\(demo?.age ?? 0), gender:\(demo?.gender ?? false)")
+    }
 }
-

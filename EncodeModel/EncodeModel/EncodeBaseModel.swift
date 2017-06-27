@@ -1,14 +1,19 @@
-
-
-
-
-
+//
+//  EncodeBaseModel.swift
+//  EncodeModel
+//
+//  Created by 白彬涵 on 2017/6/27.
+//  Copyright © 2017年 MR White. All rights reserved.
+//
 
 import Foundation
 
 class BaseEncodeModel : NSObject, NSCoding {
     override init() {}
     
+    /// 获取所有的属性名字
+    ///
+    /// - Returns: 返回一个数组，带有属性名字
     func getPropertyNameList() -> [String] {
         var count : UInt32 = 0
         var names : [String] = []
@@ -26,6 +31,9 @@ class BaseEncodeModel : NSObject, NSCoding {
         return names
     }
     
+    /// 协议方法
+    ///
+    /// - Parameter aCoder: 编码
     func encode(with aCoder: NSCoder) {
         let propertyList = getPropertyNameList()
         for p_name in propertyList {
@@ -34,6 +42,9 @@ class BaseEncodeModel : NSObject, NSCoding {
         print("encode successful")
     }
     
+    /// 协议方法
+    ///
+    /// - Parameter aDecoder: 解码
     required init?(coder aDecoder: NSCoder) {
         super.init()
         let propertyList = getPropertyNameList()
@@ -43,41 +54,22 @@ class BaseEncodeModel : NSObject, NSCoding {
         }
     }
     
+    /// 实例方法，开始编码
+    ///
+    /// - Parameter fileName: 文件名字
     func archive(fileName: String) {
         let filePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
         let savePath = filePath + "/" + fileName + ".plist"
         NSKeyedArchiver.archiveRootObject(self, toFile: savePath)
     }
     
-    static func unarchive(fileName: String) -> Any {
+    /// 类方法，开始解码
+    ///
+    /// - Parameter fileName: 文件名字
+    /// - Return: 返回一个实例，可以为空
+    static func unarchive(fileName: String) -> Any? {
         let filePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
         let savePath = filePath + "/" + fileName + ".plist"
-        return NSKeyedUnarchiver.unarchiveObject(withFile: savePath) as! objectCode
-    }
-}
-
-
-
-
-class objectCode : BaseEncodeModel {
-    var name: String? = nil
-    var gender: Bool = false
-    var age: Int = 0
-    
-    override init() {
-        super.init()
-    }
-    
-    func describe() {
-        let arr = getPropertyNameList()
-        print(arr)
-    }
-    
-    func printProperty() {
-        print("\(name!), \(gender), \(age)")
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        return NSKeyedUnarchiver.unarchiveObject(withFile: savePath)
     }
 }
