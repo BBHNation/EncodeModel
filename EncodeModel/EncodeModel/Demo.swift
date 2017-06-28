@@ -13,4 +13,5 @@ class Demo: BaseEntity {
     var age : Int = 0
     var gender : Bool = false
     var content : String = ""
+    var classMates : Array<String> = []
 }

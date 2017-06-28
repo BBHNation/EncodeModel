@@ -22,8 +22,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func encode(_ sender: Any) {
-        let demo = Demo.init(dic: ["content":"hello world"])
-        demo.test()
+        let demo = Demo.init(dic: ["content":"hello world",
+                                   "age":12,
+                                   "name":"BBH",
+                                   "gender":false,
+                                   "classMates":["RQQ","DZ"]])
+        
         /*
         demo.content = content.text!
         demo.age = 22
@@ -31,6 +35,7 @@ class ViewController: UIViewController {
         demo.gender = true
         demo.archive(fileName: "helloFileName")
          */
+        demo.archive(fileName: "helloFileName")
     }
 
     
