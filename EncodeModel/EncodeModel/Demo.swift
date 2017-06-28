@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Demo: BaseEncodeModel {
+class Demo: BaseEntity {
     var name : String = ""
     var age : Int = 0
     var gender : Bool = false
