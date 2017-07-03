@@ -16,9 +16,14 @@ class BaseEntity: BaseEncodeModel {
     init(dic: Dictionary<String, Any>) {
         super.init()
         let propertyNames = getPropertyNameList()
+        
         // 遍历类的属性名字类表，将属性内容添加到自己的类中
         for (_, value) in propertyNames.enumerated() {
             // 开始遍历
+            // 这里需要处理一些类型，处理Dic中的类型与类中的类型不同的情况
+            // 例如 Dic中是Int，而类型中是String，需要中间做转换
+            
+            
             self.setValue(dic[value], forKey: value)
         }
     }
