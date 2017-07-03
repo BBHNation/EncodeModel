@@ -12,25 +12,33 @@ import UIKit
 /// 继承BaseEntity，然后直接调用init函数就可以直接获取已经赋值的实体
 /// 由于BaseEntity是继承自BaseEncodeModel，所以可以方便的使用Encode和Decode
 class BaseEntity: BaseEncodeModel {
-       /// 根据字典初始化
+    /// 根据字典初始化
     init(dic: Dictionary<String, Any>) {
         super.init()
         let propertyNames = getPropertyNameList()
-//        let propertyClassByName = propertyClassesByName()
         // 遍历类的属性名字类表，将属性内容添加到自己的类中
         for (_, value) in propertyNames.enumerated() {
             // 开始遍历
             self.setValue(dic[value], forKey: value)
-            }
+        }
     }
-    
-    func test() {
-        print(propertyClassesByName())
-    }
-    
+
     /// 继承自BaseEncodeModel之后必须要写的一个协议函数
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    /// 描述文字
+    override var description: String {
+        get {
+            var descripString : String? = ""
+            let propertyNames = getPropertyNameList()
+            for (_, value) in propertyNames.enumerated() {
+                
+                descripString?.append("\(value) is: \(self.value(forKey: value) ?? "\(value) is nil") \n")
+            }
+            return descripString!
+        }
     }
     
     /// 获取属性名字和类型
@@ -38,6 +46,7 @@ class BaseEntity: BaseEncodeModel {
     /// - Returns: 返回[String : AnyClass]的字典
     /// - BUG: 其中有一个缓存bug，缓存失败，给自己添加属性失败
     /// - BUG: 其中类型处理处有需要解决的BUG，对象类型如何分类？
+    /// - 大BUG: 发现其实可以不用获取属性和类型对就可以实现需求！
     private func propertyClassesByName() -> [String : AnyClass] {
         // 这里是做了一个缓存，如果有直接返回，如果没有再处理之后再缓存
         // 这里有一个缓存不成功的BUG
@@ -65,11 +74,23 @@ class BaseEntity: BaseEncodeModel {
                     // 开始判断变量的类型
                     var propertyClass : AnyClass? = nil // 可为空的属性类型，如果为空则表示目前这个类型没有被处理
                     guard let typeEncoding = property_copyAttributeValue(property, "T") else { continue }// 第二个参数是“V”是获取变量名，“T”是获取类型，其中typeEncoding是Int8类型
+                    
                     switch typeEncoding[0] {
                     case 64:
                         // %@ 对象Object类型
                         print("对象类型")
-                        propertyClass = object_getClass(String.self)
+                        if strlen(typeEncoding) >= 3 {
+                            let cName = strndup(typeEncoding + 2, Int(strlen(typeEncoding))-3)
+                            let name = NSString.init(utf8String: cName!)
+                            let range = name?.range(of: "<")
+                            var finalName : String? = nil
+                            if range?.location != NSNotFound {
+                                finalName = (name?.substring(to: (range?.location)!))!
+                                
+                            }
+                            propertyClass = finalName==nil ? NSClassFromString(name! as String) : NSClassFromString(finalName!)
+                            free(cName)
+                        }
                     case 66:
                         // %B Bool类型
                         print("Bool类型")
@@ -98,6 +119,7 @@ class BaseEntity: BaseEncodeModel {
         return dictionary!
     }
 }
+
 
 
 

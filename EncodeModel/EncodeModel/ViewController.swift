@@ -22,19 +22,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func encode(_ sender: Any) {
-        let demo = Demo.init(dic: ["content":"hello world",
+        let he = Hello.init(dic: ["name":"白彬涵",
+                                  "gender":true])
+        let demo = Demo.init(dic: ["content":content.text ?? "nil",
                                    "age":12,
                                    "name":"BBH",
                                    "gender":false,
-                                   "classMates":["RQQ","DZ"]])
-        
-        /*
-        demo.content = content.text!
-        demo.age = 22
-        demo.name = "BBH"
-        demo.gender = true
-        demo.archive(fileName: "helloFileName")
-         */
+                                   "classMates":["RQQ","DZ"],
+                                   "otherDic":["hello":"world"],
+                                   "hellocontent":he,
+                                   "intArr":[2,3,4,5]
+                            ])
         demo.archive(fileName: "helloFileName")
     }
 
@@ -42,6 +40,6 @@ class ViewController: UIViewController {
     @IBAction func decode(_ sender: Any) {
         let demo = Demo.unarchive(fileName: "helloFileName") as? Demo
         output.text = demo?.content
-        print("name:\(demo?.name ?? ""), age:\(demo?.age ?? 0), gender:\(demo?.gender ?? false)")
+        print(demo?.description ?? "nil")
     }
 }
