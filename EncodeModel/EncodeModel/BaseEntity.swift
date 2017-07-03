@@ -16,15 +16,41 @@ class BaseEntity: BaseEncodeModel {
     init(dic: Dictionary<String, Any>) {
         super.init()
         let propertyNames = getPropertyNameList()
+        let propertyClassesByName = self.propertyClassesByName()
         
         // 遍历类的属性名字类表，将属性内容添加到自己的类中
-        for (_, value) in propertyNames.enumerated() {
+        for (_, key) in propertyNames.enumerated() {
             // 开始遍历
             // 这里需要处理一些类型，处理Dic中的类型与类中的类型不同的情况
             // 例如 Dic中是Int，而类型中是String，需要中间做转换
+            var finalValue : String? = nil// 根据类型的不同做一些适配
+            if propertyClassesByName[key] == NSString.self {
+                // 如果是NSString类型
+                finalValue = "\(dic[key] ?? "nil")"
+//                print("NSString类型")
+            }
+            else if propertyClassesByName[key] == NSArray.self {
+                // 如果是NSArray类型
+//                print("NSArray类型")
+            }
+            else if propertyClassesByName[key] == NSDictionary.self {
+                // 如果是NSDictionary类型
+//                print("NSDictionary类型")
+            }
+            else if propertyClassesByName[key] == Int.self {
+                // 如果是Int类型
+//                print("Int类型")
+            }
+            else if propertyClassesByName[key] == Bool.self {
+                // 如果是Bool类型
+//                print("Bool类型")
+            }
+            else {
+                // 未捕获类型
+//                print("未捕获类型")
+            }
             
-            
-            self.setValue(dic[value], forKey: value)
+            self.setValue(finalValue==nil ? dic[key] : finalValue, forKey: key)
         }
     }
 
@@ -51,7 +77,6 @@ class BaseEntity: BaseEncodeModel {
     /// - Returns: 返回[String : AnyClass]的字典
     /// - BUG: 其中有一个缓存bug，缓存失败，给自己添加属性失败
     /// - BUG: 其中类型处理处有需要解决的BUG，对象类型如何分类？
-    /// - 大BUG: 发现其实可以不用获取属性和类型对就可以实现需求！
     private func propertyClassesByName() -> [String : AnyClass] {
         // 这里是做了一个缓存，如果有直接返回，如果没有再处理之后再缓存
         // 这里有一个缓存不成功的BUG
@@ -83,7 +108,7 @@ class BaseEntity: BaseEncodeModel {
                     switch typeEncoding[0] {
                     case 64:
                         // %@ 对象Object类型
-                        print("对象类型")
+//                        print("对象类型")
                         if strlen(typeEncoding) >= 3 {
                             let cName = strndup(typeEncoding + 2, Int(strlen(typeEncoding))-3)
                             let name = NSString.init(utf8String: cName!)
@@ -91,20 +116,20 @@ class BaseEntity: BaseEncodeModel {
                             var finalName : String? = nil
                             if range?.location != NSNotFound {
                                 finalName = (name?.substring(to: (range?.location)!))!
-                                
                             }
-                            propertyClass = finalName==nil ? NSClassFromString(name! as String) : NSClassFromString(finalName!)
+                            propertyClass = finalName == nil ? NSClassFromString(name! as String) : NSClassFromString(finalName!)
+                            print(propertyClass ?? "property is nil")
                             free(cName)
                         }
                     case 66:
                         // %B Bool类型
-                        print("Bool类型")
+//                        print("Bool类型")
                         propertyClass = object_getClass(Bool.self)
                     case 113:
-                        print("Int类型")
+//                        print("Int类型")
                         propertyClass = object_getClass(Int.self)
                     default:
-                        print("未被处理的类型")
+//                        print("未被处理的类型")
                         break
                     }
                     free(typeEncoding)

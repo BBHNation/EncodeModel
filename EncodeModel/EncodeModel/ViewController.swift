@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     @IBAction func encode(_ sender: Any) {
         let he = Hello.init(dic: ["name": 123,
                                   "gender":true])
+        
+        
         let demo = Demo.init(dic: ["content":content.text ?? "nil",
                                    "age":12,
                                    "name":"BBH",
